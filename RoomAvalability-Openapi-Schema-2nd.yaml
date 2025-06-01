@@ -1,0 +1,43 @@
+openapi: 3.0.0
+info:
+  title: Hotel Room Availability API
+  version: 1.0.0
+  description: APIs for managing hotel room availability, checking booking constraints, and sending booking reminders to customers.
+paths:
+  /rooms:
+    get:
+      summary: Get a list of all available rooms
+      description: Retrieves a list of all available room types for a specified date. Returns room types and their availability status.
+      operationId: getAllAvailableRooms
+      parameters:
+        - name: date
+          in: query
+          description: Date for checking room availability (YYYY-MM-DD)
+          required: true
+          schema:
+            type: string
+            format: date
+      responses:
+        "200":
+          description: List of available room types for the specified date
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    roomType:
+                      type: string
+                      description: Type of room (e.g., Single, Double, Suite)
+                    date:
+                      type: string
+                      description: Date of availability (YYYY-MM-DD)
+                    availableRooms:
+                      type: integer
+                      description: Number of available rooms for the room type
+                    price:
+                      type: number
+                      description: Price per night for the room type
+        "400":
+          description: Invalid date format or missing date parameter
