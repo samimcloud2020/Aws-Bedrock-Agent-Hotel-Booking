@@ -151,4 +151,26 @@ Bedrock agent sent to Booking Lambda Function
 }
 
 ************************************************************************************************************************************************
+response to bedrock agent by lambda function Bookings
+***********************************************************************************************************************************************
+
+{
+  "messageVersion": "1.0",
+  "response": {
+    "actionGroup": "action-group2",
+    "apiPath": "/bookings",
+    "httpMethod": "POST",
+    "httpStatusCode": 200,
+    "responseBody": {
+      "application/json": {
+        "body": "\"82c96729-f5d2-46ce-b2f5-078b2e1fa31d\""
+      }
+    }
+  },
+  "sessionAttributes": {},
+  "promptSessionAttributes": {}
+}
+
+*********************************************************************************************************************************************
+
 
