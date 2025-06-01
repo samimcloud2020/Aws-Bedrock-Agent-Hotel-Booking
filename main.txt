@@ -106,3 +106,49 @@ The final response back to Bedrock agent.
 }
 
 ******************************************************************************************************************************
+Bedrock agent sent to Booking Lambda Function
+******************************************************************************************************************************
+
+{
+  "parameters": [],
+  "messageVersion": "1.0",
+  "sessionId": "651706775874232",
+  "agent": {
+    "name": "agent1",
+    "version": "DRAFT",
+    "id": "6DBPVDBL6D",
+    "alias": "TSTALIASID"
+  },
+  "actionGroup": "action-group2",
+  "sessionAttributes": {},
+  "promptSessionAttributes": {},
+  "inputText": "pls book Single room date on 2025-05-01. my name is Raju.",
+  "httpMethod": "POST",
+  "apiPath": "/bookings",
+  "requestBody": {
+    "content": {
+      "application/json": {
+        "properties": [
+          {
+            "name": "customerName",
+            "type": "string",
+            "value": "Raju"
+          },
+          {
+            "name": "date",
+            "type": "string",
+            "value": "2025-05-01"
+          },
+          {
+            "name": "roomType",
+            "type": "string",
+            "value": "Single"
+          }
+        ]
+      }
+    }
+  }
+}
+
+************************************************************************************************************************************************
+
