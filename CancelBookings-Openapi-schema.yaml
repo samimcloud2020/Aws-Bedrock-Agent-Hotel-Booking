@@ -1,0 +1,89 @@
+openapi: 3.0.0
+info:
+  title: Hotel Booking Cancellation API
+  version: 1.0.2
+  description: API for canceling a booking by Booking ID and updating room availability in DynamoDB.
+paths:
+  /bookings/{bookingId}/cancel:
+    post:
+      summary: Cancel a booking
+      description: Cancels a booking identified by Booking ID, updates the booking status to Cancelled, and increments the available rooms for the corresponding room type and date. Handles composite key schemas for the Bookings table.
+      operationId: cancelBooking
+      parameters:
+        - name: bookingId
+          in: path
+          description: Unique identifier of the booking to cancel
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                bookingId:
+                  type: string
+                  description: Unique identifier of the booking to cancel
+              required:
+                - bookingId
+      responses:
+        '200':
+          description: Booking cancelled successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  bookingId:
+                    type: string
+                    description: Unique identifier of the cancelled booking
+                  roomType:
+                    type: string
+                    description: Type of room booked
+                  date:
+                    type: string
+                    description: Date of the booking (YYYY-MM-DD)
+                  customerName:
+                    type: string
+                    description: Name of the customer
+                  status:
+                    type: string
+                    description: Updated status of the booking (Cancelled)
+                required:
+                  - bookingId
+                  - roomType
+                  - date
+                  - customerName
+                  - status
+        '400':
+          description: Bad request due to missing parameters or booking already cancelled
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Error message describing the issue
+        '404':
+          description: Booking not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Error message indicating booking not found
+        '500':
+          description: Server error during booking cancellation or availability update, possibly due to table schema mismatch
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Error message describing the server issue
