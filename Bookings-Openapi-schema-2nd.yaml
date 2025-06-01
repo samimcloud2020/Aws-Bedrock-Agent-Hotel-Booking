@@ -1,0 +1,82 @@
+openapi: 3.0.0
+info:
+  title: Hotel Room Booking API
+  version: 1.0.2
+  description: API for creating a booking by checking room availability and updating booking records in DynamoDB.
+paths:
+  /bookings:
+    post:
+      summary: Create a new booking
+      description: Checks room availability for a specified room type and date, creates a booking entry if rooms are available, and updates the room availability.
+      operationId: createBooking
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                roomType:
+                  type: string
+                  description: Type of room to book (e.g., Single, Double, Suite)
+                  enum: [Single, Double, Suite]
+                date:
+                  type: string
+                  description: Date of the booking (YYYY-MM-DD)
+                  format: date
+                customerName:
+                  type: string
+                  description: Name of the customer making the booking
+              required:
+                - roomType
+                - date
+                - customerName
+      responses:
+        '200':
+          description: Booking created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  bookingId:
+                    type: string
+                    description: Unique identifier for the booking
+                  roomType:
+                    type: string
+                    description: Type of room booked
+                  date:
+                    type: string
+                    description: Date of the booking (YYYY-MM-DD)
+                  customerName:
+                    type: string
+                    description: Name of the customer
+                  status:
+                    type: string
+                    description: Status of the booking (e.g., Confirmed)
+                required:
+                  - bookingId
+                  - roomType
+                  - date
+                  - customerName
+                  - status
+        '400':
+          description: Bad request due to missing parameters, invalid room type, or no available rooms
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Error message describing the issue
+        '500':
+          description: Server error during booking creation or availability update
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Error message describing the server issue
