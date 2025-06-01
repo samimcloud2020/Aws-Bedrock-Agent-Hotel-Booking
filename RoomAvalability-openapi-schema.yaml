@@ -1,0 +1,118 @@
+openapi: 3.0.0
+info:
+  title: Hotel Room Availability API
+  version: 1.0.0
+  description: APIs for managing hotel room availability, checking booking constraints, and sending booking reminders to customers.
+paths:
+  /rooms:
+    get:
+      summary: Get a list of all available rooms
+      description: Retrieves a list of all available room types for a specified date. Returns room types and their availability status.
+      operationId: getAllAvailableRooms
+      parameters:
+        - name: date
+          in: query
+          description: Date for checking room availability (YYYY-MM-DD)
+          required: true
+          schema:
+            type: string
+            format: date
+      responses:
+        "200":
+          description: List of available room types for the specified date
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    roomType:
+                      type: string
+                      description: Type of room (e.g., Single, Double, Suite)
+                    date:
+                      type: string
+                      description: Date of availability (YYYY-MM-DD)
+                    availableRooms:
+                      type: integer
+                      description: Number of available rooms for the room type
+                    price:
+                      type: number
+                      description: Price per night for the room type
+        "400":
+          description: Invalid date format or missing date parameter
+  /rooms/{roomType}/constraints:
+    get:
+      summary: Identify booking constraints for a specific room type
+      description: Retrieves any booking constraints (e.g., minimum stay or maximum guests) for a specific room type on a given date. This API takes one room type and date at a time and returns the constraints.
+      operationId: identifyBookingConstraints
+      parameters:
+        - name: roomType
+          in: path
+          description: Type of room (e.g., Single, Double, Suite)
+          required: true
+          schema:
+            type: string
+        - name: date
+          in: query
+          description: Date for checking constraints (YYYY-MM-DD)
+          required: true
+          schema:
+            type: string
+            format: date
+      responses:
+        "200":
+          description: List of booking constraints for the specified room type and date
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  constraints:
+                    type: string
+                    description: List of booking constraints (e.g., Minimum stay 2 nights or Maximum guests 2)
+        "400":
+          description: Invalid room type or date format
+        "404":
+          description: No constraints found for the room type and date
+  /send-booking-reminders:
+    post:
+      summary: Send booking reminder to the customer
+      description: Sends a reminder to the customer about booking a room for a specific date and room type. The API takes one room type, date, and customer email at a time, sends the reminder, and returns tracking details.
+      operationId: sendBookingReminders
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                roomType:
+                  type: string
+                  description: Type of room to send reminder for (e.g., Single, Double, Suite)
+                date:
+                  type: string
+                  description: Date of the potential booking (YYYY-MM-DD)
+                customerEmail:
+                  type: string
+                  description: Email address of the customer to receive the reminder
+              required:
+                - roomType
+                - date
+                - customerEmail
+      responses:
+        "200":
+          description: Reminder sent successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  reminderTrackingId:
+                    type: string
+                    description: Unique ID to track the status of the reminder
+                  reminderStatus:
+                    type: string
+                    description: Status of the reminder notification
+        "400":
+          description: Bad request. One or more required fields are missing or invalid
