@@ -19,3 +19,6 @@ CustomerName
 RoomType
 	
 Status
+
+*************************************************************input******************************
+{'messageVersion': '1.0', 'parameters': [{'name': 'date', 'type': 'string', 'value': '2025-05-01'}], 'httpMethod': 'GET', 'apiPath': '/rooms', 'sessionId': '651706775874469', 'agent': {'name': 'agent1', 'version': 'DRAFT', 'id': '6DBPVDBL6D', 'alias': 'TSTALIASID'}, 'actionGroup': 'action-group1', 'sessionAttributes': {}, 'promptSessionAttributes': {}, 'inputText': 'how many room available on 2025-05-01.'}
