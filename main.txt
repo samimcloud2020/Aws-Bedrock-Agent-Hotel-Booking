@@ -85,3 +85,24 @@ def lambda_handler(event, context):
         
     return api_response
 ************************************************************************************************************
+The final response back to Bedrock agent.
+***************************************************************************************************************
+
+{
+  "messageVersion": "1.0",
+  "response": {
+    "actionGroup": "action-group1",
+    "apiPath": "/rooms",
+    "httpMethod": "GET",
+    "httpStatusCode": 200,
+    "responseBody": {
+      "application/json": {
+        "body": "[{\"roomType\": \"Single\", \"date\": \"2025-05-01\", \"availableRooms\": 9, \"price\": 1000.0}, {\"roomType\": \"Double\", \"date\": \"2025-05-01\", \"availableRooms\": 0, \"price\": 0.0}, {\"roomType\": \"Suite\", \"date\": \"2025-05-01\", \"availableRooms\": 0, \"price\": 0.0}]"
+      }
+    },
+    "sessionAttributes": {},
+    "promptSessionAttributes": {}
+  }
+}
+
+******************************************************************************************************************************
