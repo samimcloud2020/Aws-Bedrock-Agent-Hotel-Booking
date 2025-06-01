@@ -1,0 +1,21 @@
+DynamodbTable:  RoomAvalability
+
+RoomType (String)
+	
+Date (String)
+	
+AvailableRooms (int)
+	
+Price (int)
+
+DynamodbTable: Bookings
+
+BookingId (String)
+	
+Date (String)
+	
+CustomerName
+	
+RoomType
+	
+Status
